@@ -130,6 +130,34 @@
     .legal{color:var(--faint);font-size:12.5px;margin-top:26px;line-height:1.6;
       border-top:1px solid var(--line);padding-top:20px}
 
+    /* ---------- Setup / Firebase guide ---------- */
+    details.fb{max-width:860px;margin:30px auto 0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+    details.fb>summary{cursor:pointer;list-style:none;padding:18px 22px;font-weight:700;font-size:15.5px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    details.fb>summary::-webkit-details-marker{display:none}
+    details.fb>summary:hover{background:#141b27}
+    details.fb>summary .chev{color:var(--red-2);transition:transform .2s ease;flex-shrink:0}
+    details.fb[open]>summary .chev{transform:rotate(90deg)}
+    .fb-body{padding:4px 22px 24px;border-top:1px solid var(--line)}
+    .fb-lead{color:var(--muted);font-size:14.5px;margin:16px 0 8px}
+    .fb-pill{display:inline-block;font-size:12.5px;font-weight:600;color:var(--red-2);border:1px solid rgba(232,67,31,.3);border-radius:999px;padding:3px 11px;margin-bottom:6px}
+    .gstep{display:flex;gap:14px;padding:18px 0;border-top:1px solid var(--line)}
+    .gnum{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--grad);color:#fff;font-weight:800;font-size:14px;display:grid;place-items:center;box-shadow:0 5px 14px rgba(232,67,31,.3)}
+    .gstep h3{font-size:16px;font-weight:700;margin-bottom:6px}
+    .gstep p{color:var(--muted);font-size:14.5px;margin:0 0 8px}
+    .gstep ul{color:var(--muted);font-size:14.5px;margin:0 0 8px;padding-left:20px}
+    .gstep li{margin:4px 0}
+    .gstep a{color:var(--red-2);text-decoration:underline}
+    .gstep em{color:var(--ink);font-style:italic}
+    .ui{background:#1c2430;border:1px solid var(--line-2);border-radius:6px;padding:1px 6px;font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap}
+    .note{border-radius:10px;padding:11px 13px;font-size:13.5px;margin:10px 0;background:#121826;border:1px solid var(--line-2);border-left:3px solid var(--faint);color:var(--muted)}
+    .note strong{color:var(--ink)}
+    .note.tip{border-left-color:#3f7bd6}
+    .note.warn{border-left-color:var(--red);background:rgba(232,67,31,.07)}
+    .code{margin:10px 0;border:1px solid var(--line-2);border-radius:10px;overflow:hidden;background:#0b0f16}
+    .code-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;background:#0e131c;border-bottom:1px solid var(--line);font-size:12px;color:var(--faint)}
+    .copy-btn{font-family:inherit;font-weight:700;font-size:12px;color:#fff;background:var(--grad);border:none;border-radius:7px;padding:5px 12px;cursor:pointer}
+    .code pre{margin:0;padding:13px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#cdd6e3;white-space:pre}
+
     :focus-visible{outline:2px solid var(--red-2);outline-offset:3px;border-radius:6px}
 
     @media (max-width:860px){
@@ -179,8 +207,8 @@
       <p class="trust">Free · No account needed to start · Works on any website</p>
 
       <figure class="frame hero-shot">
-        <img src="assets/01-overview.webp" width="1586" height="992"
-             alt="Live Classroom Captions running in a Google Doc, showing synchronized English, Spanish, and Vietnamese caption boxes next to the extension's popup.">
+        <img src="assets/01-overview.webp" width="1672" height="941"
+             alt="The Live Classroom Captions popup (version 1.15.0): Start Captions, Browser or AI recognition, language pills, a 'Join your class' box to paste your teacher's code, and an accommodation room.">
       </figure>
     </section>
 
@@ -236,8 +264,12 @@
       </div>
       <div class="tour">
         <figure class="frame">
-          <img src="assets/03-customization.webp" width="1586" height="992" loading="lazy"
-               alt="The settings page for adjusting caption background, opacity, font size, color, on-screen position, and quick-pick languages, with a live preview.">
+          <img src="assets/captions-in-doc.webp" width="1586" height="992" loading="lazy"
+               alt="Live Classroom Captions running in a Google Doc — English, Spanish, and Vietnamese caption boxes update live beside the lesson, with the extension popup open.">
+        </figure>
+        <figure class="frame">
+          <img src="assets/03-customization.webp" width="1672" height="941" loading="lazy"
+               alt="The Live Caption Settings page: speech recognition, Room Sharing with a Firebase config and student join code, caption appearance, quick-pick languages, presets, and a live multilingual preview.">
         </figure>
         <figure class="frame">
           <img src="assets/04-transcripts.webp" width="1586" height="992" loading="lazy"
@@ -275,6 +307,217 @@
       </div>
     </section>
 
+    <!-- SETUP / FIREBASE GUIDE -->
+    <section class="wrap" id="setup">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="dot"></span>Setup</span>
+        <h2>Turn on student access</h2>
+        <p class="sub" style="text-align:center">Student access runs on your own free Google Firebase project — a one-time, no-code setup that keeps your class's data private and the whole thing free for everyone.</p>
+      </div>
+
+      <details class="fb">
+        <summary>
+          <span>Set up your free Firebase project — step by step</span>
+          <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </summary>
+        <div class="fb-body">
+          <p class="fb-lead">Room Sharing lets your students see your live translation captions on their own devices. Each teacher uses their own free project, so it stays free for everyone and your data stays separate. You only do this once.</p>
+          <span class="fb-pill">About 10 minutes · No coding · Browser only</span>
+
+          <div class="gstep">
+            <div class="gnum">1</div>
+            <div>
+              <h3>Create a Firebase project</h3>
+              <p>Go to <a href="https://console.firebase.google.com" target="_blank" rel="noopener noreferrer">console.firebase.google.com</a> and sign in with a Google account (your personal one is fine).</p>
+              <p>Click <span class="ui">Create a project</span> and give it any name, such as <em>Classroom Captions</em>.</p>
+              <div class="note tip"><strong>Tip:</strong> When it asks about Google Analytics, switch it <strong>off</strong> — it's not needed. Then finish creating the project.</div>
+            </div>
+          </div>
+
+          <div class="gstep">
+            <div class="gnum">2</div>
+            <div>
+              <h3>Turn on anonymous sign-in</h3>
+              <p>This lets student devices connect without anyone logging in or creating an account.</p>
+              <ul>
+                <li>In the left sidebar, under <span class="ui">Product categories</span>, click <span class="ui">Security</span>.</li>
+                <li>Click <span class="ui">Authentication</span>, then <span class="ui">Get started</span>.</li>
+                <li>Choose <span class="ui">Anonymous</span> from the list of sign-in providers.</li>
+                <li>Toggle it to <span class="ui">Enable</span>, then click <span class="ui">Save</span>.</li>
+              </ul>
+              <div class="note tip"><strong>Can't find it?</strong> If <span class="ui">Authentication</span> isn't under <span class="ui">Security</span>, type <em>Authentication</em> into the <span class="ui">Search for products</span> box at the top of the sidebar.</div>
+            </div>
+          </div>
+
+          <div class="gstep">
+            <div class="gnum">3</div>
+            <div>
+              <h3>Create the Realtime Database</h3>
+              <ul>
+                <li>In the left sidebar, under <span class="ui">Product categories</span>, click <span class="ui">Databases &amp; Storage</span>.</li>
+                <li>Click <span class="ui">Realtime Database</span>, then <span class="ui">Create Database</span>.</li>
+                <li>Pick the location closest to you and continue.</li>
+                <li>When asked about security rules, start in <span class="ui">locked mode</span> — you'll paste the real rules next.</li>
+              </ul>
+              <div class="note warn"><strong>Important:</strong> Choose <strong>Realtime Database</strong>, not "Firestore Database" (also called "Cloud Firestore"). They sit near each other in the list, and this extension uses Realtime Database.</div>
+            </div>
+          </div>
+
+          <div class="gstep">
+            <div class="gnum">4</div>
+            <div>
+              <h3>Paste in the security rules</h3>
+              <p>These rules keep students from injecting fake captions or seeing each other's data. They run on Google's servers, so they can't be bypassed.</p>
+              <ul>
+                <li>On the Realtime Database page, click the <span class="ui">Rules</span> tab.</li>
+                <li>Select everything in the box and delete it.</li>
+                <li>Copy the rules below and paste them in.</li>
+                <li>Click <span class="ui">Publish</span>.</li>
+              </ul>
+              <div class="code">
+                <div class="code-bar"><span>Security rules — paste all of this</span><button class="copy-btn" data-copy="#fbRules" type="button">Copy</button></div>
+                <pre id="fbRules">{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "rooms": {
+      "$roomCode": {
+        ".read": "data.child('active').val() === true &amp;&amp; data.child('expiresAt').val() &gt; now",
+        "ownerUid":  { ".validate": "newData.isString() &amp;&amp; newData.val().length &gt; 0" },
+        "createdAt": { ".validate": "newData.isNumber()" },
+        "expiresAt": { ".validate": "newData.isNumber()" },
+        "active":    { ".validate": "newData.isBoolean()" },
+        "type":      { ".validate": "newData.isString() &amp;&amp; newData.val() === 'main'" },
+        ".write": "(!data.exists() &amp;&amp; auth != null &amp;&amp; newData.child('ownerUid').val() === auth.uid &amp;&amp; newData.child('expiresAt').val() &lt;= (now + 28800001)) || (data.exists() &amp;&amp; data.child('ownerUid').val() === auth.uid)",
+        "captions": {
+          ".read": "data.parent().child('active').val() === true &amp;&amp; data.parent().child('expiresAt').val() &gt; now",
+          "$pushId": {
+            ".write": "auth != null &amp;&amp; data.parent().parent().child('ownerUid').val() === auth.uid",
+            ".validate": "newData.hasChildren(['text','timestamp'])",
+            "text":      { ".validate": "newData.isString() &amp;&amp; newData.val().length &lt;= 5000" },
+            "timestamp": { ".validate": "newData.isNumber()" },
+            "translations": { ".validate": "newData.hasChildren() || newData.val() === null" },
+            "$other": { ".validate": true }
+          }
+        },
+        "connections": {
+          "$connUid": {
+            ".write": "auth != null &amp;&amp; $connUid === auth.uid &amp;&amp; data.parent().parent().child('active').val() === true",
+            ".validate": "newData.hasChild('lastSeen')",
+            "joinedAt": { ".validate": "newData.isNumber()" },
+            "lastSeen": { ".validate": "newData.isNumber()" },
+            "$other": { ".validate": false }
+          }
+        },
+        "$other": { ".validate": false }
+      }
+    },
+
+    "accommodationRooms": {
+      "$accommodationCode": {
+        ".read": "data.child('active').val() === true &amp;&amp; data.child('expiresAt').val() &gt; now",
+        "ownerUid":  { ".validate": "newData.isString() &amp;&amp; newData.val().length &gt; 0" },
+        "createdAt": { ".validate": "newData.isNumber()" },
+        "expiresAt": { ".validate": "newData.isNumber()" },
+        "active":    { ".validate": "newData.isBoolean()" },
+        "type":      { ".validate": "newData.isString() &amp;&amp; newData.val() === 'accommodation'" },
+        ".write": "(!data.exists() &amp;&amp; auth != null &amp;&amp; newData.child('ownerUid').val() === auth.uid &amp;&amp; newData.child('expiresAt').val() &lt;= (now + 28800001)) || (data.exists() &amp;&amp; data.child('ownerUid').val() === auth.uid)",
+        "connections": {
+          "$connUid": {
+            ".write": "auth != null &amp;&amp; $connUid === auth.uid &amp;&amp; data.parent().parent().child('active').val() === true",
+            ".validate": "newData.hasChild('lastSeen')",
+            "joinedAt": { ".validate": "newData.isNumber()" },
+            "lastSeen": { ".validate": "newData.isNumber()" },
+            "$other": { ".validate": false }
+          }
+        },
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}</pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="gstep">
+            <div class="gnum">5</div>
+            <div>
+              <h3>Get your configuration</h3>
+              <ul>
+                <li>Near the top of the left sidebar, click <span class="ui">Settings</span> (the gear), then <span class="ui">General</span>.</li>
+                <li>Scroll to <span class="ui">Your apps</span> and click the web icon <span class="ui">&lt;/&gt;</span> (angle brackets — not the iOS or Android icons) to register a web app.</li>
+                <li>Give it any nickname and click <span class="ui">Register app</span>. Leave <span class="ui">Also set up Firebase Hosting</span> unchecked.</li>
+              </ul>
+              <p>Firebase shows an <span class="ui">Add Firebase SDK</span> screen — ignore the npm and <span class="ui">&lt;script&gt;</span> options. Just find the block that starts with <span class="ui">const firebaseConfig</span>:</p>
+              <div class="code">
+                <div class="code-bar"><span>Example — yours will have real values</span><button class="copy-btn" data-copy="#fbExample" type="button">Copy</button></div>
+                <pre id="fbExample">const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "your-project.firebaseapp.com",
+  databaseURL: "https://your-project-default-rtdb.firebaseio.com",
+  projectId: "your-project",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234:web:abcd"
+};</pre>
+              </div>
+              <div class="note tip"><strong>Tip:</strong> Copy only what's inside the curly braces <span class="ui">{ }</span> (the braces included). Don't include <span class="ui">const firebaseConfig =</span>, and don't copy the semicolon after the closing brace.</div>
+            </div>
+          </div>
+
+          <div class="gstep">
+            <div class="gnum">6</div>
+            <div>
+              <h3>Paste it into the extension</h3>
+              <ul>
+                <li>Open the extension's <span class="ui">Settings &amp; styling</span> page and find the <span class="ui">Room Sharing</span> section.</li>
+                <li>Paste your configuration into the <span class="ui">Firebase configuration</span> box and click <span class="ui">Save settings</span>.</li>
+              </ul>
+              <p>The extension checks your configuration when you save and tells you if anything looks off. You won't need to touch Firebase again.</p>
+            </div>
+          </div>
+
+          <div class="gstep">
+            <div class="gnum">7</div>
+            <div>
+              <h3>Name your class and share the code</h3>
+              <p>In the same Settings page, open <span class="ui">Share with your students</span> and give your class a name students will recognize — include your name and subject, like <em>Mr. Leatherwood — Chemistry</em>. The name travels with your join code, so students who have several teachers can tell your class apart in their list.</p>
+              <p>Then copy your join code (or the <span class="ui">styled invite</span> for Canvas / Classroom) and post it where your students will see it. It's the same code all year — grab it again anytime a new student joins your roster.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- HOW STUDENTS JOIN -->
+    <section class="wrap" id="students">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="dot"></span>For students</span>
+        <h2>How students join your class</h2>
+        <p class="sub" style="text-align:center">Once Room Sharing is on, getting students connected takes about a minute — and they only do it once per teacher.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Add the extension</h3>
+          <p>Students install Live Classroom Captions from the Chrome Web Store — the same one-click install you used.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Paste your join code</h3>
+          <p>You post your class code in Google Classroom or Canvas. Each student opens the extension, pastes it into <span class="ui">Join your class</span>, and clicks <span class="ui">Join</span>.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Pick a language and follow along</h3>
+          <p>Students choose their language. Your captions appear on their own screen whenever you're running them — no account or login needed.</p>
+        </div>
+      </div>
+      <p class="sub" style="text-align:center;margin:22px auto 0">Students with several teachers keep a saved <strong>My classes</strong> list and tap to switch between them — so your named class is always easy to find.</p>
+    </section>
+
     <!-- CTA -->
     <section class="wrap">
       <div class="cta-band">
@@ -305,6 +548,18 @@
         device until you choose to push them to Google Drive.</p>
     </div>
   </footer>
+
+  <script>
+    document.querySelectorAll('.copy-btn[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var el = document.querySelector(b.getAttribute('data-copy'));
+        if (!el || !navigator.clipboard) return;
+        navigator.clipboard.writeText(el.textContent).then(function () {
+          var o = b.textContent; b.textContent = 'Copied'; setTimeout(function () { b.textContent = o; }, 1500);
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
