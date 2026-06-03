@@ -131,16 +131,17 @@
       border-top:1px solid var(--line);padding-top:20px}
 
     /* ---------- Setup / Firebase guide ---------- */
-    details.fb{max-width:860px;margin:30px auto 0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-    details.fb>summary{cursor:pointer;list-style:none;padding:18px 22px;font-weight:700;font-size:15.5px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    details.fb{max-width:860px;margin:30px auto 0}
+    details.fb>summary{cursor:pointer;list-style:none;width:fit-content;max-width:100%;margin:0 auto;display:flex;align-items:center;gap:10px;color:#fff;background:var(--grad);font-weight:700;font-size:15px;padding:13px 22px;border-radius:12px;box-shadow:0 10px 26px rgba(232,67,31,.34);transition:transform .14s ease,box-shadow .14s ease}
     details.fb>summary::-webkit-details-marker{display:none}
-    details.fb>summary:hover{background:#141b27}
-    details.fb>summary .chev{color:var(--red-2);transition:transform .2s ease;flex-shrink:0}
+    details.fb>summary:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(232,67,31,.44)}
+    details.fb>summary .chev{color:#fff;transition:transform .2s ease;flex-shrink:0}
     details.fb[open]>summary .chev{transform:rotate(90deg)}
-    .fb-body{padding:4px 22px 24px;border-top:1px solid var(--line)}
+    .fb-body{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 22px 24px}
     .fb-lead{color:var(--muted);font-size:14.5px;margin:16px 0 8px}
     .fb-pill{display:inline-block;font-size:12.5px;font-weight:600;color:var(--red-2);border:1px solid rgba(232,67,31,.3);border-radius:999px;padding:3px 11px;margin-bottom:6px}
     .gstep{display:flex;gap:14px;padding:18px 0;border-top:1px solid var(--line)}
+    .gstep>div{min-width:0}
     .gnum{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--grad);color:#fff;font-weight:800;font-size:14px;display:grid;place-items:center;box-shadow:0 5px 14px rgba(232,67,31,.3)}
     .gstep h3{font-size:16px;font-weight:700;margin-bottom:6px}
     .gstep p{color:var(--muted);font-size:14.5px;margin:0 0 8px}
