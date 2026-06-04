@@ -172,6 +172,7 @@
     /* ---------- Footer ---------- */
     footer{border-top:1px solid var(--line);padding:40px 0 56px}
     .foot{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+    .foot-links{display:flex;gap:16px 22px;flex-wrap:wrap;align-items:center}
     .foot-link{color:var(--muted);font-size:14px;font-weight:500;display:inline-flex;align-items:center;min-height:44px;transition:color .16s var(--ease)}
     .foot-link:hover{color:var(--red-2)}
     .legal{color:var(--faint);font-size:12.5px;margin-top:24px;line-height:1.6;border-top:1px solid var(--line);padding-top:22px}
@@ -350,159 +351,7 @@
         <h2>Turn on student access.</h2>
         <p class="lead" style="margin:14px auto 0">Student access runs on your own free Google Firebase project, a one-time setup that keeps your class's data private and the whole thing free.</p>
       </div>
-      <details class="fb">
-        <summary>
-          <span>Set up your free Firebase project, step&nbsp;by&nbsp;step</span>
-          <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-        </summary>
-        <div class="fb-body">
-          <p class="fb-lead">Room Sharing lets your students see your live translation captions on their own devices. Each teacher uses their own free project, so it stays free for everyone and your data stays separate. You only do this once.</p>
-          <span class="fb-pill">About 10 minutes · No coding · Browser only</span>
-
-          <div class="gstep"><div class="gnum">1</div><div>
-            <h3>Create a Firebase project</h3>
-            <p>Go to <a href="https://console.firebase.google.com" target="_blank" rel="noopener noreferrer">console.firebase.google.com</a> and sign in with a Google account (your personal one is fine).</p>
-            <p>Click <span class="ui">Create a project</span> and give it any name, such as <em>Classroom Captions</em>.</p>
-            <div class="note"><strong>Tip:</strong> when it asks about Google Analytics, switch it off. It isn't needed. Then finish creating the project.</div>
-          </div></div>
-
-          <div class="gstep"><div class="gnum">2</div><div>
-            <h3>Turn on anonymous sign-in</h3>
-            <p>This lets student devices connect without anyone logging in or creating an account.</p>
-            <ul>
-              <li>In the left sidebar, under <span class="ui">Product categories</span>, click <span class="ui">Security</span>.</li>
-              <li>Click <span class="ui">Authentication</span>, then <span class="ui">Get started</span>.</li>
-              <li>Choose <span class="ui">Anonymous</span> from the list of sign-in providers.</li>
-              <li>Toggle it to <span class="ui">Enable</span>, then click <span class="ui">Save</span>.</li>
-            </ul>
-            <div class="note"><strong>Can't find it?</strong> If <span class="ui">Authentication</span> isn't under <span class="ui">Security</span>, type <em>Authentication</em> into the <span class="ui">Search for products</span> box at the top of the sidebar.</div>
-          </div></div>
-
-          <div class="gstep"><div class="gnum">3</div><div>
-            <h3>Create the Realtime Database</h3>
-            <ul>
-              <li>In the left sidebar, under <span class="ui">Product categories</span>, click <span class="ui">Databases &amp; Storage</span>.</li>
-              <li>Click <span class="ui">Realtime Database</span>, then <span class="ui">Create Database</span>.</li>
-              <li>Pick the location closest to you and continue.</li>
-              <li>When asked about security rules, start in <span class="ui">locked mode</span>. You'll paste the real rules next.</li>
-            </ul>
-            <div class="note warn"><strong>Important:</strong> choose <strong>Realtime Database</strong>, not "Firestore Database" (also called "Cloud Firestore"). They sit near each other, and this extension uses Realtime Database.</div>
-          </div></div>
-
-          <div class="gstep"><div class="gnum">4</div><div>
-            <h3>Paste in the security rules</h3>
-            <p>These rules keep students from injecting fake captions or seeing each other's data. They run on Google's servers, so they can't be bypassed.</p>
-            <ul>
-              <li>On the Realtime Database page, click the <span class="ui">Rules</span> tab.</li>
-              <li>Select everything in the box and delete it.</li>
-              <li>Copy the rules below and paste them in.</li>
-              <li>Click <span class="ui">Publish</span>.</li>
-            </ul>
-            <div class="code">
-              <div class="code-bar"><span>Security rules, paste all of this</span><button class="copy-btn" data-copy="#fbRules" type="button">Copy</button></div>
-              <pre id="fbRules">{
-  "rules": {
-    ".read": false,
-    ".write": false,
-
-    "rooms": {
-      "$roomCode": {
-        ".read": "data.child('active').val() === true &amp;&amp; data.child('expiresAt').val() &gt; now",
-        "ownerUid":  { ".validate": "newData.isString() &amp;&amp; newData.val().length &gt; 0" },
-        "createdAt": { ".validate": "newData.isNumber()" },
-        "expiresAt": { ".validate": "newData.isNumber()" },
-        "active":    { ".validate": "newData.isBoolean()" },
-        "type":      { ".validate": "newData.isString() &amp;&amp; newData.val() === 'main'" },
-        ".write": "(!data.exists() &amp;&amp; auth != null &amp;&amp; newData.child('ownerUid').val() === auth.uid &amp;&amp; newData.child('expiresAt').val() &lt;= (now + 28800001)) || (data.exists() &amp;&amp; data.child('ownerUid').val() === auth.uid)",
-        "captions": {
-          ".read": "data.parent().child('active').val() === true &amp;&amp; data.parent().child('expiresAt').val() &gt; now",
-          "$pushId": {
-            ".write": "auth != null &amp;&amp; data.parent().parent().child('ownerUid').val() === auth.uid",
-            ".validate": "newData.hasChildren(['text','timestamp'])",
-            "text":      { ".validate": "newData.isString() &amp;&amp; newData.val().length &lt;= 5000" },
-            "timestamp": { ".validate": "newData.isNumber()" },
-            "translations": { ".validate": "newData.hasChildren() || newData.val() === null" },
-            "$other": { ".validate": true }
-          }
-        },
-        "connections": {
-          "$connUid": {
-            ".write": "auth != null &amp;&amp; $connUid === auth.uid &amp;&amp; data.parent().parent().child('active').val() === true",
-            ".validate": "newData.hasChild('lastSeen')",
-            "joinedAt": { ".validate": "newData.isNumber()" },
-            "lastSeen": { ".validate": "newData.isNumber()" },
-            "$other": { ".validate": false }
-          }
-        },
-        "$other": { ".validate": false }
-      }
-    },
-
-    "accommodationRooms": {
-      "$accommodationCode": {
-        ".read": "data.child('active').val() === true &amp;&amp; data.child('expiresAt').val() &gt; now",
-        "ownerUid":  { ".validate": "newData.isString() &amp;&amp; newData.val().length &gt; 0" },
-        "createdAt": { ".validate": "newData.isNumber()" },
-        "expiresAt": { ".validate": "newData.isNumber()" },
-        "active":    { ".validate": "newData.isBoolean()" },
-        "type":      { ".validate": "newData.isString() &amp;&amp; newData.val() === 'accommodation'" },
-        ".write": "(!data.exists() &amp;&amp; auth != null &amp;&amp; newData.child('ownerUid').val() === auth.uid &amp;&amp; newData.child('expiresAt').val() &lt;= (now + 28800001)) || (data.exists() &amp;&amp; data.child('ownerUid').val() === auth.uid)",
-        "connections": {
-          "$connUid": {
-            ".write": "auth != null &amp;&amp; $connUid === auth.uid &amp;&amp; data.parent().parent().child('active').val() === true",
-            ".validate": "newData.hasChild('lastSeen')",
-            "joinedAt": { ".validate": "newData.isNumber()" },
-            "lastSeen": { ".validate": "newData.isNumber()" },
-            "$other": { ".validate": false }
-          }
-        },
-        "$other": { ".validate": false }
-      }
-    }
-  }
-}</pre>
-            </div>
-          </div></div>
-
-          <div class="gstep"><div class="gnum">5</div><div>
-            <h3>Get your configuration</h3>
-            <ul>
-              <li>Near the top of the left sidebar, click <span class="ui">Settings</span> (the gear), then <span class="ui">General</span>.</li>
-              <li>Scroll to <span class="ui">Your apps</span> and click the web icon <span class="ui">&lt;/&gt;</span> (angle brackets, not the iOS or Android icons) to register a web app.</li>
-              <li>Give it any nickname and click <span class="ui">Register app</span>. Leave <span class="ui">Also set up Firebase Hosting</span> unchecked.</li>
-            </ul>
-            <p>Firebase shows an <span class="ui">Add Firebase SDK</span> screen. Ignore the npm and <span class="ui">&lt;script&gt;</span> options. Just find the block that starts with <span class="ui">const firebaseConfig</span>:</p>
-            <div class="code">
-              <div class="code-bar"><span>Example, yours will have real values</span><button class="copy-btn" data-copy="#fbExample" type="button">Copy</button></div>
-              <pre id="fbExample">const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "your-project.firebaseapp.com",
-  databaseURL: "https://your-project-default-rtdb.firebaseio.com",
-  projectId: "your-project",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234:web:abcd"
-};</pre>
-            </div>
-            <div class="note"><strong>Tip:</strong> copy only what's inside the curly braces <span class="ui">{ }</span> (braces included). Don't include <span class="ui">const firebaseConfig =</span>, and don't copy the semicolon after the closing brace.</div>
-          </div></div>
-
-          <div class="gstep"><div class="gnum">6</div><div>
-            <h3>Paste it into the extension</h3>
-            <ul>
-              <li>Open the extension's <span class="ui">Settings &amp; styling</span> page and find the <span class="ui">Room Sharing</span> section.</li>
-              <li>Paste your configuration into the <span class="ui">Firebase configuration</span> box and click <span class="ui">Save settings</span>.</li>
-            </ul>
-            <p>The extension checks your configuration when you save and tells you if anything looks off. You won't need to touch Firebase again.</p>
-          </div></div>
-
-          <div class="gstep"><div class="gnum">7</div><div>
-            <h3>Name your class and share the code</h3>
-            <p>In the same Settings page, open <span class="ui">Share with your students</span> and give your class a name students will recognize, like <em>Mr. Leatherwood, Chemistry</em>. The name travels with your join code, so students who have several teachers can tell your class apart in their list.</p>
-            <p>Then copy your join code (or the <span class="ui">styled invite</span> for Canvas / Classroom) and post it where your students will see it. It's the same code all year.</p>
-          </div></div>
-        </div>
-      </details>
+      <div style="display:flex;justify-content:center;margin-top:30px"><a class="btn btn-primary" href="setup.html">Open the setup guide</a></div>
     </section>
 
     <!-- CTA -->
@@ -523,7 +372,7 @@
     <div class="wrap">
       <div class="foot">
         <a class="logo" href="#top"><span class="mark">CC</span><span class="name">Live Classroom Captions</span></a>
-        <a class="foot-link" href="https://chrisl18rel.github.io/live-classroom-captions-privacy/">Privacy Policy</a>
+        <nav class="foot-links"><a class="foot-link" href="setup.html">Setup guide</a><a class="foot-link" href="ai-mode.html">AI Mode &amp; costs</a><a class="foot-link" href="it-deployment.html">For IT</a><a class="foot-link" href="https://chrisl18rel.github.io/live-classroom-captions-privacy/">Privacy Policy</a></nav>
       </div>
       <p class="legal">© 2026 Live Classroom Captions. Not affiliated with or endorsed by Google. Google Docs, Drive, Translate, and Chrome are trademarks of Google LLC. Transcripts stay on your device until you choose to push them to Google Drive.</p>
     </div>
