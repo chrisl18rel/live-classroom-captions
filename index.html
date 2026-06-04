@@ -1,4 +1,4 @@
-<!-- index-redesign.html -->
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,6 +129,7 @@
 
     /* ---------- Setup / Firebase guide ---------- */
     .setup-head{text-align:center;max-width:680px;margin:0 auto}
+    #setup{padding-top:clamp(64px,8vw,84px)}
     details.fb{max-width:880px;margin:34px auto 0}
     details.fb>summary{cursor:pointer;list-style:none;width:fit-content;max-width:100%;margin:0 auto;
       display:flex;align-items:center;gap:10px;color:#fff;background:var(--grad);font-family:var(--sans);
@@ -181,7 +182,8 @@
       .feat{padding:26px 0}
       .fb-body{padding:8px 16px 20px}
       .track{padding:22px 18px}
-      .wrap{padding:0 20px}
+      .wrap{padding-left:20px;padding-right:20px}
+      .cta{padding-top:60px;padding-bottom:60px}
     }
 
     :focus-visible{outline:2px solid var(--red-2);outline-offset:3px;border-radius:6px}
@@ -350,7 +352,7 @@
       </div>
       <details class="fb">
         <summary>
-          <span>Set up your free Firebase project, step by step</span>
+          <span>Set up your free Firebase project, step&nbsp;by&nbsp;step</span>
           <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
         </summary>
         <div class="fb-body">
